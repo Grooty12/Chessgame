@@ -28,7 +28,7 @@ function preload() {
   brickIMG[6][1] = loadImage("assets/White/Pawn.png");
 }
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, 900);
   imageMode(CENTER);
   noStroke();
   drawBoard();
@@ -91,8 +91,8 @@ class Bricks {
     this.y = floor(brickSquare / 8) * 100;
     this.x = (brickSquare - (this.y / 100) * 8) * 100;
   }
-  update(brickType, brickColour) {
-    this.type = brickType;
+  update(brickTypes, brickColour) {
+    this.type = brickTypes;
     this.colour = brickColour;
   }
 
@@ -139,7 +139,26 @@ function mousePressed() {
         drawBricks();
         return;
       }
+      moveBricks();
       print("Second square pressed is: ", squarePressed2);
     }
   }
+}
+
+function moveBricks() {
+  if (square[squarePressed1].type == 6) {
+    movePawn();
+  }
+}
+
+function movePawn() {
+  print(square[squarePressed1]);
+  print(square[squarePressed2]);
+  square[squarePressed2].update(
+    square[squarePressed1].type,
+    square[squarePressed2].colour
+  );
+  square[squarePressed1].update(0, 2);
+  print(square[squarePressed1]);
+  print(square[squarePressed2]);
 }
