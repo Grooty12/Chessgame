@@ -1,11 +1,8 @@
 let P,
   n = 8,
   size = 800;
-let i = 3;
-let wPawn;
-function preLoad() {
-  wPawn = loadImage("assets/White/Bishop.png");
-}
+let i = 0;
+let wPawn = "assets/White/Pawn.png";
 function setup() {
   createCanvas(size, size);
   P = size / n;
@@ -19,7 +16,6 @@ function setup() {
       rect(x * P, i * P, P, P);
     }
   }
-  image(wPawn, 100, 100);
   let pawns = new Pawn();
   pawns.show();
 }
@@ -30,11 +26,13 @@ class Pawn {
     if (i < n) {
       this.position = [i * P, (n - 1) * P];
       this.colour = "White";
-      this.img = wPawn;
+      this.img = createImg(wPawn);
+      this.img.size(P, P);
+      this.img.position(i * P, (n - 1) * P);
     } else {
       this.position = [(i - n) * P, P];
       this.colour = "Black";
-      this.img = loadImage("assets/Black/Pawn.png");
+      this.img = createImg(wPawn);
     }
   }
   show() {
