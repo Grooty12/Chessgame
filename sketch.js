@@ -1,8 +1,10 @@
 let P,
   n = 8,
   size = 800;
+let pmx, pmy;
 let i = 0;
 let wPawn = "assets/White/Pawn.png";
+let whitePawns = [];
 function setup() {
   createCanvas(size, size);
   P = size / n;
@@ -40,4 +42,10 @@ class Pawn {
     image(this.img, this.position[0], this.position[1]);
   }
 }
-function checkSquare() {}
+function mouseReleased() {
+  pmx = mouseX - (mouseX % P);
+  pmy = mouseY - (mouseY % P);
+  checkSquare();
+}
+function checkSquare() {
+}
