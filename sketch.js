@@ -1,17 +1,18 @@
 let P,
+  pq,
   n = 8,
   size = 800,
   selected = null,
   target = null,
   s,
-  t;
+  t,
+  q = 0,
+  pieces = [];
 let pmx, pmy, mx, my;
 let wPawn = "assets/White/Pawn.png";
 let bPawn = "assets/Black/Pawn.png";
 let wKing = "assets/White/King.png";
 let bKing = "assets/Black/King.png";
-let pawns = [],
-  kings = [];
 function setup() {
   createCanvas(size, size);
   noStroke();
@@ -27,11 +28,15 @@ function setup() {
     }
   }
   for (let i = 0; i < 2 * n; i++) {
-    pawns[i] = new Pawn(i);
+    pieces[i] = new Pawn(i);
+    q++;
   }
-  for (let i = 0; i < 2; i++) {
-    kings[i] = new King(i);
+  pq = q;
+  for (let i = pq; i < 2 + pq; i++) {
+    pieces[i] = new King(i);
+    q++;
   }
+  pq = q;
 }
 
 class Pawn {
@@ -51,18 +56,18 @@ class Pawn {
     this.img.size(P, P);
     this.img.position(this.x, this.y);
     this.hasMoved = false;
+    this.isDead = false;
   }
   update(x, y) {
     this.x = x;
     this.y = y;
     this.hasMoved = true;
     this.img.position(this.x, this.y);
-    print("Updated");
   }
 }
 class King {
   constructor(i) {
-    if (i == 0) {
+    if (i == pq) {
       this.x = 4 * P;
       this.y = (n - 1) * P;
       this.colour = "White";
@@ -83,8 +88,10 @@ class King {
     this.y = y;
     this.hasMoved = true;
     this.img.position(this.x, this.y);
-    print("Updated");
   }
+}
+class Rook {
+  constructor(i) {}
 }
 
 function mouseReleased() {
@@ -103,19 +110,9 @@ function mouseReleased() {
 
 function checkSquare(x, y) {
   if (selected == null) {
-    for (let i = 0; i < pawns.length; i++) {
-      if (pawns[i].x == x && pawns[i].y == y) {
-        selected = pawns[i];
-        print(x, y);
-        print(selected);
-        s = i;
-      }
-    }
-    for (let i = 0; i < kings.length; i++) {
-      if (kings[i].x == x && kings[i].y == y) {
-        selected = kings[i];
-        print(x, y);
-        print(selected);
+    for (let i = 0; i < pieces.length; i++) {
+      if (pieces[i].x == x && pieces[i].y == y) {
+        selected = pieces[i];
         s = i;
       }
     }
@@ -133,48 +130,63 @@ function checkSquare(x, y) {
   }
 }
 function checkTarget() {
-  for (let i = 0; i < pawns.length; i++) {
-    if (pawns[i].x == pmx && pawns[i].y == pmy) {
-      if (pawns[i].colour === selected.colour) {
+  for (let i = 0; i < pieces.length; i++) {
+    if (pieces[i].x == pmx && pieces[i].y == pmy) {
+      if (pieces[i].colour === selected.colour) {
         return;
       } else {
-        target = pawns[i];
+        target = pieces[i];
         t = i;
         return;
       }
     }
   }
 }
+function removeTarget() {
+  print("Fjerner mål");
+  pieces[t].update(800, 100);
+  pieces[t].isDead = true;
+}
 function pawnMove(colour) {
-  print("Move");
   if (target != null) {
-    print(target.type, target.colour, target.x, target.y);
   }
-  print(pawns[s]);
   if (colour === "White") {
-    print("white");
     var move = 1;
   } else {
     var move = -1;
   }
-  if (pmy + P * move == pawns[s].y) {
-    print("yes2");
+  if (pmy + P * move == pieces[s].y) {
     if (target == null) {
-      print("Ingen modstander");
-      if (pmx == pawns[s].x) {
-        print("rykket");
-        pawns[s].update(pmx, pmy);
+      if (pmx == pieces[s].x) {
+        pieces[s].update(pmx, pmy);
       }
     } else if (target.colour != colour) {
-      print("Sort modstander");
-      if (pmx + P == pawns[s].x) {
-        print("attackleft");
-        pawns[s].update(pmx, pmy);
-        pawns[t].update(800, 100);
-      } else if (pmx - P == pawns[s].x) {
-        print("attackright");
-        pawns[s].update(pmx, pmy);
-        pawns[t].update(800, 100);
+      if (pmx + P == pieces[s].x) {
+        pieces[s].update(pmx, pmy);
+        removeTarget();
+      } else if (pmx - P == pieces[s].x) {
+        pieces[s].update(pmx, pmy);
+        removeTarget();
+      }
+    }
+  }
+}
+function kingMove(colour) {
+  if (target == null || target.colour != colour) {
+    if (
+      pmx + 100 == selected.x ||
+      pmx == selected.x ||
+      pmx - 100 == selected.x
+    ) {
+      if (
+        pmy + 100 == selected.y ||
+        pmy == selected.y ||
+        pmy - 100 == selected.y
+      ) {
+        pieces[s].update(pmx, pmy);
+      }
+      if (target != null && target.colour != colour) {
+        removeTarget();
       }
     }
   }
