@@ -90,8 +90,15 @@ class King {
     this.img.position(this.x, this.y);
   }
 }
-class Rook {
-  constructor(i) {}
+class Knight {
+  constructor(i) {
+    if (i == pq || i - 1 == pq) {
+      this.x = 1 * P + ((i - pq) * 4 * P);
+      this.y = (n - 1) * P;
+      this.colour = "White";
+      this.img = createImg(wKnight)
+    }
+  }
 }
 
 function mouseReleased() {
