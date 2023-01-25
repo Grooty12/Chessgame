@@ -41,6 +41,11 @@ function setup() {
     q++;
   }
   pq = q;
+  for (let i = pq; i < 4 + pq; i++) {
+    pieces[i] = new Rook(i);
+    q++;
+  }
+  pq = q;
 }
 
 class Pawn {
@@ -117,6 +122,29 @@ class Knight {
     this.img.position(this.x, this.y);
   }
 }
+class Rook {
+  constructor(i) {
+    if (i <= pq + 1) {
+      this.x = (i - pq) * 7 * P;
+      this.y = (n - 1) * P;
+      this.colour = "White";
+      this.img = createImg("assets/White/Rook.png");
+    } else {
+      this.x = (i - pq - 2) * 7 * P;
+      this.y = 0;
+      this.colour = "Black";
+      this.img = createImg("assets/Black/Rook.png");
+    }
+    this.type = "Rook";
+    this.img.size(P, P);
+    this.img.position(this.x, this.y);
+  }
+  update(x, y) {
+    this.x = x;
+    this.y = y;
+    this.img.position(this.x, this.y);
+  }
+}
 
 function mouseReleased() {
   if (mouseX >= 0 && mouseX <= size && mouseY >= 0 && mouseY <= size) {
@@ -148,8 +176,9 @@ function checkSquare(x, y) {
       kingMove(selected.colour);
     } else if (selected.type === "Knight") {
       knightMove(selected.colour);
+    } else if (selected.type === "Rook") {
+      rookMove(selected.colour);
     }
-
     selected = null;
     target = null;
     t = null;
@@ -177,7 +206,6 @@ function removeTarget() {
       db++;
     } else {
       if (dw < 8) {
-        print(dw);
         pieces[t].update(size, (dw * P) / 2 + size / 2);
       } else {
         pieces[t].update(size + P / 2, ((dw - n) * P) / 2 + size / 2);
@@ -232,5 +260,27 @@ function knightMove(colour) {
         removeTarget();
       }
     }
+  }
+}
+function rookMove(colour) {
+  if (target == null || target.colour != colour) {
+    if (
+      (pmx != selected.x && pmy == selected.y) ||
+      (pmy != selected.y && pmx == selected.x)
+    ) {
+      if (checkLine()) {
+        print(checkLine());
+        pieces[s].update(pmx, pmy);
+        removeTarget();
+      }
+    }
+  }
+}
+
+function checkLine() {
+  if ("Yes" === "Yes") {
+    return true;
+  } else {
+    return false;
   }
 }
