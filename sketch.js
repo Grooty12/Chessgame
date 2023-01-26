@@ -4,6 +4,7 @@ let P,
   size = 800,
   selected = null,
   target = null,
+  occupied = false,
   s,
   t,
   q = 0,
@@ -278,9 +279,35 @@ function rookMove(colour) {
 }
 
 function checkLine() {
-  if ("Yes" === "Yes") {
-    return true;
-  } else {
-    return false;
+  let checkx = pmx;
+  let checky = pmy;
+  print(checkx, checky, selected.x, selected.y);
+  while (checkx != selected.x && checky != selected.y) {
+    print("checkLine");
+    if (pmx > selected.x) {
+      checkx -= P;
+    } else if (pmx < selected.x) {
+      checkx += P;
+    }
+    if (pmy > selected.y) {
+      checky -= P;
+    } else if (pmy < selected.y) {
+      checky += P;
+    }
+    print(checkx, checky, selected.x, selected.y);
+    if (checkIfOccupied(checkx, checky)) {
+      occupied = false;
+      return false;
+    }
+  }
+}
+
+function checkIfOccupied(x, y) {
+  print("Tjekker felt");
+  for (let i = 0; i < pieces.length; i++) {
+    print(pieces[i].x, pieces[i].y, x, y);
+    if (pieces[i].x == x && pieces[i].y == y) {
+      occupied = true;
+    }
   }
 }
