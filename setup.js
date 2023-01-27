@@ -4,7 +4,6 @@ let P,
   size = 800,
   selected = null,
   target = null,
-  occupied = false,
   s,
   t,
   fy,
@@ -13,7 +12,8 @@ let P,
   dw = 0,
   db = 0,
   pieces = [],
-  pColour = "Black";
+  pColour = "Black",
+  k = [];
 let pmx, pmy, mx, my;
 function setup() {
   P = size / n;
@@ -37,6 +37,7 @@ function setup() {
   pq = q;
   for (let i = pq; i < 2 + pq; i++) {
     pieces[i] = new King(i);
+    k.push(i);
     q++;
   }
   pq = q;

@@ -27,7 +27,6 @@ function checkLine(checkx, checky) {
       break;
     }
     if (checkIfOccupied(checkx, checky)) {
-      occupied = false;
       return false;
     }
   }
