@@ -4,7 +4,6 @@ function pawnMove(colour) {
   } else {
     var move = -1;
   }
-
   if (pmy + P * move == pieces[s].y) {
     if (target == null) {
       if (pmx == pieces[s].x) {
@@ -30,6 +29,7 @@ function pawnMove(colour) {
     }
   }
 }
+
 function knightMove(colour) {
   if (target == null || target.colour != colour) {
     if (pmx + 2 * P == selected.x || pmx - 2 * P == selected.x) {
@@ -47,6 +47,7 @@ function knightMove(colour) {
     }
   }
 }
+
 function rookMove(colour) {
   if (target == null || target.colour != colour) {
     if (
@@ -75,6 +76,7 @@ function bishopMove(colour) {
     }
   }
 }
+
 function queenMove(colour) {
   if (target == null || target.colour != colour) {
     fx = pmx - selected.x;
@@ -88,6 +90,7 @@ function queenMove(colour) {
     }
   }
 }
+
 function kingMove(colour) {
   if (target == null || target.colour != colour) {
     if (abs(pmx - selected.x) == 2 * P) {
