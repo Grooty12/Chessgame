@@ -90,15 +90,8 @@ class King {
     this.img.position(this.x, this.y);
   }
 }
-class Knight {
-  constructor(i) {
-    if (i == pq || i - 1 == pq) {
-      this.x = 1 * P + ((i - pq) * 4 * P);
-      this.y = (n - 1) * P;
-      this.colour = "White";
-      this.img = createImg(wKnight)
-    }
-  }
+class Rook {
+  constructor(i) {}
 }
 
 function mouseReleased() {
@@ -111,14 +104,13 @@ function mouseReleased() {
     selected = null;
     s = null;
     t = null;
-    print("Fuck dig cunt, du er udenfor brættet");
   }
 }
 
 function checkSquare(x, y) {
   if (selected == null) {
     for (let i = 0; i < pieces.length; i++) {
-      if (pieces[i].x == x && pieces[i].y == y) {
+      if (pieces[i].x == x && pieces[i].y == y && pColour != pieces[i].colour) {
         selected = pieces[i];
         s = i;
       }
@@ -129,72 +121,81 @@ function checkSquare(x, y) {
       pawnMove(selected.colour);
     } else if (selected.type === "King") {
       kingMove(selected.colour);
+    } else if (selected.type === "Knight") {
+      knightMove(selected.colour);
+    } else if (selected.type === "Rook") {
+      rookMove(selected.colour);
+    } else if (selected.type === "Bishop") {
+      bishopMove(selected.colour);
+    } else if (selected.type == "Queen") {
+      queenMove(selected.colour);
     }
     selected = null;
     target = null;
     t = null;
     s = null;
+    checkPotMoves();
   }
 }
+
 function checkTarget() {
   for (let i = 0; i < pieces.length; i++) {
     if (pieces[i].x == pmx && pieces[i].y == pmy) {
-      if (pieces[i].colour === selected.colour) {
-        return;
-      } else {
-        target = pieces[i];
-        t = i;
-        return;
-      }
+      target = pieces[i];
+      t = i;
+      return;
     }
   }
 }
+
+function checkLine(checkx, checky) {
+  while (checkx != selected.x || checky != selected.y) {
+    if (pmx > selected.x) {
+      checkx -= P;
+    } else if (pmx < selected.x) {
+      checkx += P;
+    }
+    if (pmy > selected.y) {
+      checky -= P;
+    } else if (pmy < selected.y) {
+      checky += P;
+    }
+    if (checkx == selected.x && checky == selected.y) {
+      break;
+    }
+    if (checkIfOccupied(checkx, checky)) {
+      return false;
+    }
+  }
+  return true;
+}
+function checkIfOccupied(x, y) {
+  for (let i = 0; i < pieces.length; i++) {
+    if (pieces[i].x == x && pieces[i].y == y) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function removeTarget() {
-  print("Fjerner mål");
-  pieces[t].update(800, 100);
-  pieces[t].isDead = true;
-}
-function pawnMove(colour) {
   if (target != null) {
-  }
-  if (colour === "White") {
-    var move = 1;
-  } else {
-    var move = -1;
-  }
-  if (pmy + P * move == pieces[s].y) {
-    if (target == null) {
-      if (pmx == pieces[s].x) {
-        pieces[s].update(pmx, pmy);
+    if (pieces[t].colour === "Black") {
+      if (db < 8) {
+        pieces[t].update(size, (db * P) / 2);
+      } else {
+        pieces[t].update(size + P / 2, ((db - n) * P) / 2);
       }
-    } else if (target.colour != colour) {
-      if (pmx + P == pieces[s].x) {
-        pieces[s].update(pmx, pmy);
-        removeTarget();
-      } else if (pmx - P == pieces[s].x) {
-        pieces[s].update(pmx, pmy);
-        removeTarget();
+      db++;
+    } else {
+      if (dw < 8) {
+        pieces[t].update(size, (dw * P) / 2 + size / 2);
+      } else {
+        pieces[t].update(size + P / 2, ((dw - n) * P) / 2 + size / 2);
       }
+      dw++;
     }
-  }
-}
-function kingMove(colour) {
-  if (target == null || target.colour != colour) {
-    if (
-      pmx + 100 == selected.x ||
-      pmx == selected.x ||
-      pmx - 100 == selected.x
-    ) {
-      if (
-        pmy + 100 == selected.y ||
-        pmy == selected.y ||
-        pmy - 100 == selected.y
-      ) {
-        pieces[s].update(pmx, pmy);
-      }
-      if (target != null && target.colour != colour) {
-        removeTarget();
-      }
-    }
+    pieces[t].img.size(P / 2, P / 2);
+    pieces[t].isDead = true;
   }
 }
