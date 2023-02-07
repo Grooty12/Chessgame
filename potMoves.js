@@ -1,6 +1,7 @@
 function checkPotMoves() {
+  potentialMoves = [];
   for (let i = 0; i < pieces.length; i++) {
-    if (pieces[i].type === "Knight" || pieces[i].type === "King") {
+    if (pieces[i].type === "King" || pieces[i].type === "Knight") {
       potMoves(pieces[i].x, pieces[i].y, i);
     }
   }
@@ -33,8 +34,8 @@ function checkPotSquare() {
   t = null;
   s = null;
 }
-function checkOutOfBounds(X, Y) {
-  if (X >= 0 && X < size && Y >= 0 && Y < size) {
+function checkOutOfBounds(fX, fY) {
+  if (fX >= 0 && fX < size && fY >= 0 && fY < size) {
     return false;
   } else {
     target = null;
@@ -48,6 +49,8 @@ function knightPotMove(colour) {
     pmx = px + knightMoves[i][0] * P;
     pmy = py + knightMoves[i][1] * P;
     if (!checkOutOfBounds(pmx, pmy)) {
+      target = null;
+      t = null;
       checkTarget();
     } else {
       continue;
@@ -64,14 +67,28 @@ function kingPotMove(colour) {
     pmx = px + kingMoves[i][0] * P;
     pmy = py + kingMoves[i][1] * P;
     if (!checkOutOfBounds(pmx, pmy)) {
+      target = null;
+      t = null;
       checkTarget();
     } else {
       continue;
     }
     if (target == null || target.colour != colour) {
-      print(pmx, pmy);
       potentialMoves.push([pmx, pmy]);
+    } else {
     }
   }
   pieces[s].updateMoves(potentialMoves);
+}
+
+function pawnPotMove(colour) {
+  if (colour == "White") {
+    var pawnMoves = [[0, 1]];
+  } else {
+    var pawnMoves = [[0, 1]];
+  }
+  for (let i = 0; i < pawnMoves.length; i++) {
+    pmx = px + pawnMoves[i][0] * P;
+    pmy = px + pawnMoves[i][1] * P;
+  }
 }
