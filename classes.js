@@ -18,8 +18,13 @@ class Pawn {
     this.isDead = false;
     this.moves = [];
     this.num = i;
+    piecePos[this.x / P][this.y / P] = this.num;
   }
   update(x, y) {
+    if (x < size) {
+      piecePos[this.x / P][this.y / P] = null;
+      piecePos[x / P][y / P] = this.num;
+    }
     this.x = x;
     this.y = y;
     this.hasMoved = true;
@@ -49,8 +54,13 @@ class King {
     this.img.position(this.x, this.y);
     this.moves = [];
     this.num = i;
+    piecePos[this.x / P][this.y / P] = this.num;
   }
   update(x, y) {
+    if (x < size) {
+      piecePos[this.x / P][this.y / P] = null;
+      piecePos[x / P][y / P] = this.num;
+    }
     this.x = x;
     this.y = y;
     this.hasMoved = true;
@@ -78,8 +88,13 @@ class Knight {
     this.img.position(this.x, this.y);
     this.moves = [];
     this.num = i;
+    piecePos[this.x / P][this.y / P] = this.num;
   }
   update(x, y) {
+    if (x < size) {
+      piecePos[this.x / P][this.y / P] = null;
+      piecePos[x / P][y / P] = this.num;
+    }
     this.x = x;
     this.y = y;
     this.img.position(this.x, this.y);
@@ -107,8 +122,13 @@ class Rook {
     this.img.position(this.x, this.y);
     this.moves = [];
     this.num = i;
+    piecePos[this.x / P][this.y / P] = this.num;
   }
   update(x, y) {
+    if (x < size) {
+      piecePos[this.x / P][this.y / P] = null;
+      piecePos[x / P][y / P] = this.num;
+    }
     this.hasMoved = true;
     this.x = x;
     this.y = y;
@@ -136,8 +156,13 @@ class Bishop {
     this.img.position(this.x, this.y);
     this.moves = [];
     this.num = i;
+    piecePos[this.x / P][this.y / P] = this.num;
   }
   update(x, y) {
+    if (x < size) {
+      piecePos[this.x / P][this.y / P] = null;
+      piecePos[x / P][y / P] = this.num;
+    }
     this.x = x;
     this.y = y;
     this.img.position(this.x, this.y);
@@ -164,8 +189,13 @@ class Queen {
     this.img.position(this.x, this.y);
     this.moves = [];
     this.num = i;
+    piecePos[this.x / P][this.y / P] = this.num;
   }
   update(x, y) {
+    if (x < size) {
+      piecePos[this.x / P][this.y / P] = null;
+      piecePos[x / P][y / P] = this.num;
+    }
     this.x = x;
     this.y = y;
     this.hasMoved = true;

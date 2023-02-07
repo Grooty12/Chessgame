@@ -12,27 +12,23 @@ function mouseReleased() {
 }
 
 function checkSquare(x, y) {
-  if (selected == null) {
-    for (let i = 0; i < pieces.length; i++) {
-      if (pieces[i].x == x && pieces[i].y == y && pColour != pieces[i].colour) {
-        selected = pieces[i];
-        s = i;
-      }
-    }
-  } else if (selected != null) {
+  if (pieces[s] == null) {
+    s = piecePos[x / P][y / P];
+    selected = pieces[s];
+  } else if (pieces[s] != null) {
     checkTarget();
-    if (selected.type === "Pawn") {
-      pawnMove(selected.colour);
-    } else if (selected.type === "King") {
-      kingMove(selected.colour);
-    } else if (selected.type === "Knight") {
-      knightMove(selected.colour);
-    } else if (selected.type === "Rook") {
-      rookMove(selected.colour);
-    } else if (selected.type === "Bishop") {
-      bishopMove(selected.colour);
-    } else if (selected.type == "Queen") {
-      queenMove(selected.colour);
+    if (pieces[s].type === "Pawn") {
+      pawnMove(pieces[s].colour);
+    } else if (pieces[s].type === "King") {
+      kingMove(pieces[s].colour);
+    } else if (pieces[s].type === "Knight") {
+      knightMove(pieces[s].colour);
+    } else if (pieces[s].type === "Rook") {
+      rookMove(pieces[s].colour);
+    } else if (pieces[s].type === "Bishop") {
+      bishopMove(pieces[s].colour);
+    } else if (pieces[s].type == "Queen") {
+      queenMove(pieces[s].colour);
     }
     selected = null;
     target = null;
@@ -43,28 +39,23 @@ function checkSquare(x, y) {
 }
 
 function checkTarget() {
-  for (let i = 0; i < pieces.length; i++) {
-    if (pieces[i].x == pmx && pieces[i].y == pmy) {
-      target = pieces[i];
-      t = i;
-      return;
-    }
-  }
+  t = piecePos[pmx / P][pmy / P];
+  target = pieces[t];
 }
 
 function checkLine(checkx, checky) {
-  while (checkx != selected.x || checky != selected.y) {
-    if (pmx > selected.x) {
+  while (checkx != pieces[s].x || checky != pieces[s].y) {
+    if (pmx > pieces[s].x) {
       checkx -= P;
-    } else if (pmx < selected.x) {
+    } else if (pmx < pieces[s].x) {
       checkx += P;
     }
-    if (pmy > selected.y) {
+    if (pmy > pieces[s].y) {
       checky -= P;
-    } else if (pmy < selected.y) {
+    } else if (pmy < pieces[s].y) {
       checky += P;
     }
-    if (checkx == selected.x && checky == selected.y) {
+    if (checkx == pieces[s].x && checky == pieces[s].y) {
       break;
     }
     if (checkIfOccupied(checkx, checky)) {
@@ -73,11 +64,10 @@ function checkLine(checkx, checky) {
   }
   return true;
 }
+
 function checkIfOccupied(x, y) {
-  for (let i = 0; i < pieces.length; i++) {
-    if (pieces[i].x == x && pieces[i].y == y) {
-      return true;
-    }
+  if (piecePos[x / P][y / P] != null) {
+    return true;
   }
   return false;
 }

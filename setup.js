@@ -13,22 +13,13 @@ let P,
   db = 0,
   pieces = [],
   pColour = "Black",
-  k = [],
-  potentialMoves = [];
+  potentialMoves = [],
+  piecePos = [];
 let pmx, pmy, mx, my, px, py;
 let pawnMoves = [];
 let kingMoves = [];
 let bishopMoves = [];
-let knightMoves = [
-  [2, 1],
-  [2, -1],
-  [-2, 1],
-  [-2, -1],
-  [1, 2],
-  [-1, 2],
-  [1, -2],
-  [-1, -2],
-];
+let knightMoves = [];
 let rookMoves = [];
 let rooks = [],
   kings = [],
@@ -43,7 +34,9 @@ function setup() {
   background(220);
   noStroke();
   for (let i = 0; i * P < size; i++) {
+    let linePos = [];
     for (let x = 0; x * P < size; x++) {
+      linePos.push(null);
       if ((i + x) % 2 == 0) {
         fill(255, 248, 220);
       } else {
@@ -51,6 +44,7 @@ function setup() {
       }
       rect(x * P, i * P, P, P);
     }
+    piecePos.push(linePos);
   }
   for (let i = 0; i < 2 * n; i++) {
     pieces[i] = new Pawn(i);
@@ -61,7 +55,6 @@ function setup() {
   for (let i = pq; i < 2 + pq; i++) {
     pieces[i] = new King(i);
     kings.push(i);
-    k.push(i);
     q++;
   }
   pq = q;
@@ -89,10 +82,6 @@ function setup() {
     q++;
   }
   pq = q;
+  defineMoves();
   checkPotMoves();
-  indexPieces();
-}
-
-function indexPieces() {
-  for (let i = 0; i < pieces.length; i++) {}
 }
