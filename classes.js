@@ -16,17 +16,12 @@ class Pawn {
     this.img.position(this.x, this.y);
     this.hasMoved = false;
     this.isDead = false;
-    this.moves = [];
-    this.num = i;
   }
   update(x, y) {
     this.x = x;
     this.y = y;
     this.hasMoved = true;
     this.img.position(this.x, this.y);
-  }
-  updateMoves(Moves) {
-    this.moves = Moves;
   }
 }
 
@@ -47,17 +42,12 @@ class King {
     this.img.size(P, P);
     this.hasMoved = false;
     this.img.position(this.x, this.y);
-    this.moves = [];
-    this.num = i;
   }
   update(x, y) {
     this.x = x;
     this.y = y;
     this.hasMoved = true;
     this.img.position(this.x, this.y);
-  }
-  updateMoves(Moves) {
-    this.moves = Moves;
   }
 }
 class Knight {
@@ -76,16 +66,11 @@ class Knight {
     this.type = "Knight";
     this.img.size(P, P);
     this.img.position(this.x, this.y);
-    this.moves = [];
-    this.num = i;
   }
   update(x, y) {
     this.x = x;
     this.y = y;
     this.img.position(this.x, this.y);
-  }
-  updateMoves(Moves) {
-    this.moves = Moves;
   }
 }
 class Rook {
@@ -105,17 +90,12 @@ class Rook {
     this.hasMoved = false;
     this.img.size(P, P);
     this.img.position(this.x, this.y);
-    this.moves = [];
-    this.num = i;
   }
   update(x, y) {
     this.hasMoved = true;
     this.x = x;
     this.y = y;
     this.img.position(this.x, this.y);
-  }
-  updateMoves(Moves) {
-    this.moves = Moves;
   }
 }
 class Bishop {
@@ -134,16 +114,11 @@ class Bishop {
     this.type = "Bishop";
     this.img.size(P, P);
     this.img.position(this.x, this.y);
-    this.moves = [];
-    this.num = i;
   }
   update(x, y) {
     this.x = x;
     this.y = y;
     this.img.position(this.x, this.y);
-  }
-  updateMoves(Moves) {
-    this.moves = Moves;
   }
 }
 class Queen {
@@ -162,16 +137,11 @@ class Queen {
     this.type = "Queen";
     this.img.size(P, P);
     this.img.position(this.x, this.y);
-    this.moves = [];
-    this.num = i;
   }
   update(x, y) {
     this.x = x;
     this.y = y;
     this.hasMoved = true;
     this.img.position(this.x, this.y);
-  }
-  updateMoves(Moves) {
-    this.moves = Moves;
   }
 }
