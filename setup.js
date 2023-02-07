@@ -13,8 +13,33 @@ let P,
   db = 0,
   pieces = [],
   pColour = "Black",
-  k = [];
-let pmx, pmy, mx, my;
+  k = [],
+  potentialMoves = [];
+let pmx, pmy, mx, my, px, py;
+let pawnMoves = [];
+let kingMoves = [
+  [1, 1],
+  [1, 0],
+  [1, -1],
+  [0, 1],
+  [0, -1],
+  [-1, 1],
+  [-1, 0],
+  [-1, -1],
+];
+let bishopMoves = [];
+let knightMoves = [
+  [2, 1],
+  [2, -1],
+  [-2, 1],
+  [-2, -1],
+  [1, 2],
+  [-1, 2],
+  [1, -2],
+  [-1, -2],
+];
+let rookMoves = [];
+
 function setup() {
   P = size / n;
   createCanvas(size + P, size + P);
@@ -61,4 +86,5 @@ function setup() {
     q++;
   }
   pq = q;
+  checkPotMoves();
 }
