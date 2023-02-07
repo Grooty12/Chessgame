@@ -30,6 +30,12 @@ let knightMoves = [
   [-1, -2],
 ];
 let rookMoves = [];
+let rooks = [],
+  kings = [],
+  pawns = [],
+  queens = [],
+  bishops = [],
+  knights = [];
 
 function setup() {
   P = size / n;
@@ -48,34 +54,45 @@ function setup() {
   }
   for (let i = 0; i < 2 * n; i++) {
     pieces[i] = new Pawn(i);
+    pawns.push(i);
     q++;
   }
   pq = q;
   for (let i = pq; i < 2 + pq; i++) {
     pieces[i] = new King(i);
+    kings.push(i);
     k.push(i);
     q++;
   }
   pq = q;
   for (let i = pq; i < 4 + pq; i++) {
     pieces[i] = new Knight(i);
+    knights.push(i);
     q++;
   }
   pq = q;
   for (let i = pq; i < 4 + pq; i++) {
     pieces[i] = new Rook(i);
+    rooks.push(i);
     q++;
   }
   pq = q;
   for (let i = pq; i < 4 + pq; i++) {
     pieces[i] = new Bishop(i);
+    bishops.push(i);
     q++;
   }
   pq = q;
   for (let i = pq; i < 2 + pq; i++) {
     pieces[i] = new Queen(i);
+    queens.push(i);
     q++;
   }
   pq = q;
   checkPotMoves();
+  indexPieces();
+}
+
+function indexPieces() {
+  for (let i = 0; i < pieces.length; i++) {}
 }
