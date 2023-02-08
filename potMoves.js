@@ -1,7 +1,11 @@
 function checkPotMoves() {
-  potentialMoves = [];
   for (let i = 0; i < pieces.length; i++) {
-    if (pieces[i].type === "King" || pieces[i].type === "Knight") {
+    potentialMoves = [];
+    if (
+      pieces[i].type === "King" ||
+      pieces[i].type === "Knight" ||
+      pieces[i].type === "Pawn"
+    ) {
       potMoves(pieces[i].x, pieces[i].y, i);
     }
   }
@@ -73,17 +77,17 @@ function kingPotMove(colour) {
         pieces[rooks[i]].y == pieces[s].y
       ) {
         if (pieces[rooks[i]].x < pieces[s].x) {
-          pmx = pieces[s].x - 2 * P;
+          pmx = pieces[s].x - 4 * P;
           pmy = pieces[s].y;
           if (checkLine(pmx, pmy)) {
-            kingMoves.push(-2, 0);
+            kingMoves.push([-2, 0]);
             break;
           }
         } else if (pieces[rooks[i]].x > pieces[s].x) {
-          pmx = pieces[s].x + 2 * P;
+          pmx = pieces[s].x + 3 * P;
           pmy = pieces[s].y;
           if (checkLine(pmx, pmy)) {
-            kingMoves.push(2, 0);
+            kingMoves.push([2, 0]);
             break;
           }
         }
@@ -108,10 +112,6 @@ function kingPotMove(colour) {
       continue;
     }
   }
-  for (let i = 0; i < potentialMoves.length; i++) {
-    fill(0);
-    circle(potentialMoves[i][0] + 50, potentialMoves[i][1] + 50, 50);
-  }
   pieces[s].updateMoves(potentialMoves);
 }
 
@@ -119,14 +119,45 @@ function pawnPotMove(colour) {
   if (colour == "White") {
     var pawnR = [[0, -1]];
   } else {
-    var pawnMoves = [[0, 1]];
+    var pawnR = [[0, 1]];
   }
-  var pawnMoves = [[0, 1 * pawnR]];
-  pmx = px + pawnMoves[i][0] * P;
-  pmy = px + pawnMoves[i][1] * P;
+  pawnMoves = [[0, 1 * pawnR]];
+  pmx = px + pawnR[0][0] * P;
+  pmy = px + pawnR[0][1] * P;
   if (!checkOutOfBounds(pmx, pmy)) {
     target = null;
     t = null;
+    checkTarget();
+  } else {
+    return;
+  }
+  if (target == null) {
+    potentialMoves.push([pmx, pmy]);
+  }
+  for (let i = -1; i <= 1; i += 2) {
+    pmx = px + 1 * P * i;
+    pmy = px + 1 * P * pawnR[1];
+    if (checkOutOfBounds(pmx, pmy) || piecePos[pmx / P][pmy / P] == null) {
+      continue;
+    } else {
+      potentialMoves.push([pmx, pmy]);
+    }
+  }
+  if (pieces[s].hasMoves == false) {
+    pmx = px + 0 * P;
+    pmy = px + 2 * P * pawnR;
+    if (
+      !checkOutOfBounds(pmx, pmy) &&
+      checkLine(pmx, pmy) &&
+      piecePos[pmx / P][pmy / P] == null
+    ) {
+      potentialMoves.push([pmx, pmy]);
+    }
+  }
+  print(potentialMoves);
+  for (let i = 0; i < potentialMoves.length; i++) {
+    fill(0);
+    circle[(potentialMoves[i][0] + 50, potentialMoves[i][1] + 50, 50)];
   }
 }
 

@@ -16,7 +16,8 @@ let P,
   potentialMoves = [],
   piecePos = [];
 let pmx, pmy, mx, my, px, py;
-let pawnMoves = [];
+let pawnMovesW = [];
+let pawnMovesB = [];
 let kingMoves = [];
 let bishopMoves = [];
 let knightMoves = [];
@@ -82,6 +83,7 @@ function setup() {
     q++;
   }
   pq = q;
+  pieces[null] = null;
   defineMoves();
   checkPotMoves();
 }
