@@ -96,30 +96,30 @@ function kingMove(colour) {
     if (abs(pmx - pieces[s].x) == 2 * P) {
       if (pieces[s].hasMoved == false) {
         if (pmx - pieces[s].x > 0) {
-          for (let i = 0; i < pieces.length; i++) {
+          for (let i = 0; i < rooks.length; i++) {
             if (
-              pieces[i].x == 7 * P &&
-              pieces[i].y == pieces[s].y &&
-              pieces[i].hasMoved == false
+              pieces[rooks[i]].x == 7 * P &&
+              pieces[rooks[i]].y == pieces[s].y &&
+              pieces[rooks[i]].hasMoved == false
             ) {
               if (checkLine(7 * P, pieces[s].y)) {
                 pieces[s].update(pmx, pmy);
-                pieces[i].update(pmx - P, pmy);
+                pieces[rooks[i]].update(pmx - P, pmy);
                 pColour = pieces[s].colour;
                 return;
               }
             }
           }
         } else if (pmx - pieces[s].x < 0) {
-          for (let i = 0; i < pieces.length; i++) {
+          for (let i = 0; i < rooks.length; i++) {
             if (
-              pieces[i].x == 0 * P &&
-              pieces[i].y == pieces[s].y &&
-              pieces[i].hasMoved == false
+              pieces[rooks[i]].x == 0 * P &&
+              pieces[rooks[i]].y == pieces[s].y &&
+              pieces[rooks[i]].hasMoved == false
             ) {
               if (checkLine(0 * P, pieces[s].y)) {
                 pieces[s].update(pmx, pmy);
-                pieces[i].update(pmx + P, pmy);
+                pieces[rooks[i]].update(pmx + P, pmy);
                 pColour = pieces[s].colour;
                 return;
               }
