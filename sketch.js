@@ -94,3 +94,5 @@ function removeTarget() {
     pieces[t].isDead = true;
   }
 }
+
+function pawnUpgrade() {}

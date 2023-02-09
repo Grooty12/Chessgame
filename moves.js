@@ -28,6 +28,12 @@ function pawnMove(colour) {
       pColour = pieces[s].colour;
     }
   }
+  if (
+    (pieces[s].y == 0 && pieces[s].colour == "White") ||
+    (pieces[s].y == size - P && pieces[s].colour == "Black")
+  ) {
+    pawnUpgrade();
+  }
 }
 
 function knightMove(colour) {
