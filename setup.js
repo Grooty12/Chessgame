@@ -1,28 +1,23 @@
-let P,
-  pq,
-  n = 8,
-  size = 800,
-  selected = null,
-  target = null,
-  s,
-  t,
-  fy,
-  fx,
-  q = 0,
-  dw = 0,
-  db = 0,
-  pieces = [],
-  pColour = "Black",
-  potentialMoves = [],
-  piecePos = [];
-let pmx, pmy, mx, my, px, py;
-let pawnMovesW = [];
-let pawnMovesB = [];
-let kingMoves = [];
-let bishopMoves = [];
-let knightMoves = [];
-let rookMoves = [];
-let rooks = [],
+let P /*Size of a single square*/,
+  q = 0 /*Tells what number a piece is in the array when it is created*/,
+  pq /*Previous q value, used to */,
+  n = 8 /* Number of rows and columns in the grid */,
+  size = 800 /*Total size of the grid, excluding sideline showing dead pieces */,
+  selected = null /*Selected piece*/,
+  target = null /*Targeted piece*/,
+  s /*The index value the selected piece has*/,
+  t /*The index value the targeted piece has*/,
+  fy /* */,
+  fx /* */,
+  deadWhite = 0 /*A counter for how many dead white pieces*/,
+  deadBlack = 0 /*A counter for how mant dead black pieces*/,
+  pieces = [] /*An array that contains all the pieces*/,
+  pColour =
+    "Black" /*Colour of the previous move. Starts with black, so white starts*/,
+  piecePos = [] /* Index value of the pices based on coordinations*/,
+  pmx /*A rounded down to nearest hundreds value for the mouse's x-position*/,
+  pmy /*A rounded down to nearest hundreds value for the mouse's y-position*/,
+  rooks = [] /* Index value of all Rooks, below for all other pieces */,
   kings = [],
   pawns = [],
   queens = [],
@@ -35,6 +30,7 @@ function setup() {
   background(220);
   noStroke();
   for (let i = 0; i * P < size; i++) {
+    /* Creates board */
     let linePos = [];
     for (let x = 0; x * P < size; x++) {
       linePos.push(null);
@@ -84,6 +80,4 @@ function setup() {
   }
   pq = q;
   pieces[null] = null;
-  defineMoves();
-  checkPotMoves();
 }

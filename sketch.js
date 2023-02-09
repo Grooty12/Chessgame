@@ -16,25 +16,26 @@ function checkSquare(x, y) {
     s = piecePos[x / P][y / P];
     selected = pieces[s];
   } else if (pieces[s] != null) {
-    checkTarget();
-    if (pieces[s].type === "Pawn") {
-      pawnMove(pieces[s].colour);
-    } else if (pieces[s].type === "King") {
-      kingMove(pieces[s].colour);
-    } else if (pieces[s].type === "Knight") {
-      knightMove(pieces[s].colour);
-    } else if (pieces[s].type === "Rook") {
-      rookMove(pieces[s].colour);
-    } else if (pieces[s].type === "Bishop") {
-      bishopMove(pieces[s].colour);
-    } else if (pieces[s].type == "Queen") {
-      queenMove(pieces[s].colour);
+    if (pieces[s].colour != pColour) {
+      checkTarget();
+      if (pieces[s].type === "Pawn") {
+        pawnMove(pieces[s].colour);
+      } else if (pieces[s].type === "King") {
+        kingMove(pieces[s].colour);
+      } else if (pieces[s].type === "Knight") {
+        knightMove(pieces[s].colour);
+      } else if (pieces[s].type === "Rook") {
+        rookMove(pieces[s].colour);
+      } else if (pieces[s].type === "Bishop") {
+        bishopMove(pieces[s].colour);
+      } else if (pieces[s].type == "Queen") {
+        queenMove(pieces[s].colour);
+      }
     }
     selected = null;
     target = null;
     t = null;
     s = null;
-    checkPotMoves();
   }
 }
 
@@ -75,19 +76,19 @@ function checkIfOccupied(x, y) {
 function removeTarget() {
   if (target != null) {
     if (pieces[t].colour === "Black") {
-      if (db < 8) {
-        pieces[t].update(size, (db * P) / 2);
+      if (deadBlack < 8) {
+        pieces[t].update(size, (deadBlack * P) / 2);
       } else {
-        pieces[t].update(size + P / 2, ((db - n) * P) / 2);
+        pieces[t].update(size + P / 2, ((deadBlack - n) * P) / 2);
       }
-      db++;
+      deadBlack++;
     } else {
-      if (dw < 8) {
-        pieces[t].update(size, (dw * P) / 2 + size / 2);
+      if (deadWhite < 8) {
+        pieces[t].update(size, (deadWhite * P) / 2 + size / 2);
       } else {
-        pieces[t].update(size + P / 2, ((dw - n) * P) / 2 + size / 2);
+        pieces[t].update(size + P / 2, ((deadWhite - n) * P) / 2 + size / 2);
       }
-      dw++;
+      deadWhite++;
     }
     pieces[t].img.size(P / 2, P / 2);
     pieces[t].isDead = true;
