@@ -84,20 +84,4 @@ function setup() {
   }
   pq = q;
   pieces[null] = null;
-
-  queenButton = createImg("assets/Black/Queen.png");
-  queenButton.position(60, size + 10);
-  queenButton.size(P - 20, P - 20);
-
-  bishopButton = createImg("assets/Black/Bishop.png");
-  bishopButton.position(2 * P + 60, size + 10);
-  bishopButton.size(P - 20, P - 20);
-
-  knightButton = createImg("assets/Black/Knight.png");
-  knightButton.position(4 * P + 60, size + 10);
-  knightButton.size(P - 20, P - 20);
-
-  rookButton = createImg("assets/Black/Rook.png");
-  rookButton.position(6 * P + 60, size + 10);
-  rookButton.size(P - 20, P - 20);
 }
